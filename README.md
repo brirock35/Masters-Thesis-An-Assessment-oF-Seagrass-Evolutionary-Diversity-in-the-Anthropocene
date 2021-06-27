@@ -258,3 +258,8 @@ rgdal::writeOGR(m$poly_shp, dsn = "/Users/darulab/Desktop/BriannaR/Research/SDMs
 
 rgdal::writeOGR(p1, dsn = "/Users/darulab/Desktop/BriannaR/Research/SDMs/data/Master_occurrances/master_final/shapefiles", layer = "resampled_raw_grids", driver = "ESRI Shapefile")
 ```
+
+### Modeling 
+To build our species distribution models for each seagrass species, we first read in the necessary packages. The primary package that we will be using for the species modeling is "phyloregion" (https://cran.r-project.org/web/packages/phyloregion/index.html).  Afterwards, we also read in our preprocessed datasets for both the climate data as well as the seagrass spatial data and grid cells. We also ensure that our working directory is set to the location where we want the results written to. 
+
+#### Modeling the Master Data Using "phyloregion"
