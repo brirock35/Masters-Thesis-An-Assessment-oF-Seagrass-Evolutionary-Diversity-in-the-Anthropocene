@@ -1,15 +1,5 @@
-# Masters-Thesis-An-Assessment-of-Seagrass-Evolutionary-Diversity-in-the-Anthropocene
 
-
----
-title: "Seagrasses, Biogeography, and Global Change"
-author: "Brianna M. Rock & Barnabas H. Daru"
-date: "July 28, 2020"
-output: rmarkdown::html_vignette
-bibliography: seagrass.bib
----
-
-# Seagrasses, Biogeography, and Global Change
+# Seagrasses Biogeography and Global Change
 
 The purpose of this study is to use machine learning approaches to model the distributions of seagrass species under various scenarios of climate change and combine these predictions with a dated molecular phylogeny to predict the impact of climate change on seagrass evolutionary diversity.
 
