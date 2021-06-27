@@ -80,64 +80,7 @@ write.csv(z, "/Users/darulab/Desktop/BriannaR/Research/SDMs/data/raw_occurences/
 ``` 
 
 #### Climate Data 
-The necessary climate layers were acquired from the Bio- ORACLE (http://www.bio-oracle.org/index.php) database. We downloaded benthic and surface layers for the current year (2020), and two future decades (2040-2050 and 2090-2100) for the following variables: temperature, salinity, and currents velocity. These datasets were also gathered under four representative concentration pathway scenarios (RCP26, RCP45, RCP60, RCP85) that depict various green house gas emission levels and concentrations.
-#### Rescaling Raster Layers
-The next step was to trim our climate layers to provide climate data solely in locations where seagrasses are found. This was accomplished in R software using the “raster” and “phyloregion” package and cropping each of the rasters using a shapefile containing dissolved seagrass distributions to crop the climate data to relevant geographic locations. Once the rasters were cropped, they were saved as new action script communication (.asc) files to be further rescaled.
-
-```
-# The below example was done using the downloaded climate layers for 2020
-
-library(raster)
-p <- shapefile("/Users/BriRock/Desktop/Seagrass Research/Data/seagrasses_SHP/seagrasses_dissolved.shp")
-
-#2020 : Current
-
-f1 <- list.files(path = "/Volumes/Lexar/raw_rasters/Current/Benthic", full.names = TRUE)
-f2 <- list.files(path = "/Volumes/Lexar/raw_rasters/Current/Surface", full.names = TRUE)
-
-m <- phyloregion:::progress(f1, function(x) {
-  r1 <- mask(crop(raster(x), extent(p)), p)
-  writeRaster(r1, paste0("/Volumes/Lexar/resampled_rasters/Current/Surface/", names(r1), ".asc"), format="ascii", overwrite=TRUE)
-  gc()
-})
-
-# Re-run the same code as above but for the benthic data (ensuring that the file is written as "benthic" and not "surface"
-
-m <- phyloregion:::progress(f2, function(x) {
-  r1 <- mask(crop(raster(x), extent(p)), p)
-  writeRaster(r1, paste0("/Volumes/Lexar/resampled_rasters/Current/Benthic/", names(r1), ".asc"), format="ascii", overwrite=TRUE)
-  gc()
-})
-``` 
-To visualize how this function cropped the climate data and to check that it is correct, we plotted a newly cropped variable to a pdf document. In this case, we plotted surface temperature (°C) for the year 2020. 
-
-```
-# Check that it worked
-pdf("/Users/BriRock/Desktop/SDMs/plots/surface_temp_2020.pdf", height = 8, width = 12)
-plot(r1)
-plot(p, add=TRUE)
-dev.off()
-# see below image for resulting plot
-```
-![SST](https://github.com/brirock35/seagrass-research/blob/master/SST_2020.png)
-
-Finally, we rescaled these raster layers once more using a tagged image format (.tif) file (worldRaster_SDM_50km.tif) with a beginning resolution of 0.5 (50km). This code was repeated for all included climate rasters for current and future years under the four different representative concentration pathway scenarios (RCP26,RCP45, RCP60, and RCP85).
-
-```
-# The below example is for climate rasters from the years 2090-2100 under RCP85
-library(raster)
-files <- list.files(path="/Users/darulab/Desktop/BriannaR/Research/SDMs/Data/Climate/Bio-ORACLE/resampled_rasters/Future/2090-2100/RCP85", pattern='.asc', full.names=TRUE)
-r1 <- raster("/Users/darulab/Desktop/BriannaR/Research/SDMs/rasters/worldRaster_SDM_50km.tif")
-
-r <- stack(files)
-i = 1
-for (i in seq_along(files)) {
-  
-  r10 <- resample(r[[i]], r1, method="bilinear")
-  writeRaster(r10, paste0("/Users/darulab/Desktop/BriannaR/Research/SDMs/rasters/resampled_climates_res 0.5/resampled climate_2100_RCP85/", names(r10)), format = "ascii", overwrite = TRUE)
-  print(i)
-}
-```
+The necessary climate layers were acquired from the Bio- ORACLE (http://www.bio-oracle.org/index.php) database. We downloaded benthic and surface layers for the current year (2020), and two future decades (2040-2050 and 2090-2100) for the following variables (mean and range): temperature, salinity, and currents velocity. These datasets were also gathered under four representative concentration pathway scenarios (RCP26, RCP45, RCP60, RCP85) that depict various green house gas emission levels and concentrations.
 
 
 #### Georeferencing the Master Data
