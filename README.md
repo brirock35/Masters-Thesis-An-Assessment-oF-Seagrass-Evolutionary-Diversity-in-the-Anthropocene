@@ -1,5 +1,5 @@
 
-# Seagrasses Biogeography and Global Change
+# Seagrass Biogeography and Global Change
 
 The purpose of this study is to use machine learning approaches to model the distributions of seagrass species under various scenarios of climate change and combine these predictions with a dated molecular phylogeny to predict the impact of climate change on seagrass evolutionary diversity.
 
