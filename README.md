@@ -214,12 +214,11 @@ To build our species distribution models for each seagrass species, we first rea
 #### Alpha Diversity
 Changes in α-diversity was determined by separately computing species richness (SR), weighted endemism (WE), phylogenetic diversity (PD), and phylogenetic endemism (PE) between current and future climate scenarios. Thus, shifts in α-diversity is expressed as:
 
-α=(αj – αi)/αi 
+α  = (αj – αi)/αi 
 
 where i is species composition under current climate and j is species composition under future scenarios. 
 
 ```
-rm(list = ls()) 
 library(phyloregion)
 library(scico)
 library(raster)
@@ -290,11 +289,14 @@ plot(z9, legend.only=TRUE, zlim=c(-19506.44, 3442957.67), col=CLR, legend.width=
      legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
 
 dev.off()
-
-
 ```
 
 #### Beta Diversity
+In order to quantify beta diversity, metrics of β- and phylogenetic β-diversity, were utilized to quantify change in species and phylogenetic composition among seagrass assemblages for both current and future projections, i.e., present-2050-2100. To assess shifts in β-diversity, we used the Sørenson, Simpson, and Jaccard’s indices. Shifts in β -diversity were expressed as:
+
+ β = (βj – βi)/βi 
+
+where i is species composition under current climate and j is species composition under future scenarios.
 
 
 
