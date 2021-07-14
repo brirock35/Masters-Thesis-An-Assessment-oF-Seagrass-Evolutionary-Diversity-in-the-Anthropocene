@@ -221,7 +221,7 @@ library(scico)
 library(raster)
 
 r <- raster("/Users/BriRock/Desktop/Seagrass Research/Data/worldRaster_SDM_50km.tif")
-d <- read.csv("/Users/BriRock/Desktop/fixed_alpha_csvs/2100_RCP85_FIXED.csv")
+d <- read.csv("/Users/BriRock/Desktop/fixed_alpha_csvs/2100_RCP85.csv")
 
 r[1:ncell(r)] <- paste0("v", seq_len(ncell(r)))
 index <- match(values(r), d$grids)
@@ -272,8 +272,6 @@ plot(z5, legend.only=TRUE,  col=CLR, legend.width=1,
 plot(z6, col=CLR, axes=FALSE, legend=FALSE)
 plot(z6, legend.only=TRUE, col=CLR, legend.width=1, 
      legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
-
-
 
 plot(z7, zlim=c(-4.009199, 1.952685), col=CLR, axes=FALSE, legend=FALSE)
 plot(z7, legend.only=TRUE, zlim=c(-4.009199, 1.952685), col=CLR, legend.width=1, 
