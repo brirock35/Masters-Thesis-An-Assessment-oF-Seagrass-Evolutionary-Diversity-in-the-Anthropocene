@@ -203,10 +203,49 @@ rgdal::writeOGR(p1, dsn = "/Users/darulab/Desktop/BriannaR/Research/SDMs/data/Ma
 ```
 
 ### Modeling 
-To build our species distribution models for each seagrass species, we first read in the necessary packages. The primary package that we will be using for the species modeling is "phyloregion" (https://cran.r-project.org/web/packages/phyloregion/index.html).  Afterwards, we also read in our preprocessed datasets for both the climate data as well as the seagrass spatial data and grid cells. We also ensure that our working directory is set to the location where we want the results written to. 
+To build our species distribution models for each seagrass species, we first read in the necessary packages. The primary package that we will be using for the species modeling is "phyloregion" (https://cran.r-project.org/web/packages/phyloregion/index.html).  Afterwards, we also read in our preprocessed datasets for both the climate data as well as the seagrass spatial data and grid cells. We also ensure that our working directory is set to the location where we want the results written to. Species distribution models were estimated using presence/absence data as response variable to predict species-specific occurrence probabilities per site. Species distribution models were fitted using four different algorithms: generalized linear models (GLM), generalized boosted models (GBM), maximum entropy (MaxEnt), and random forests (RF) with a binomial error distribution (with logit link). Finally, model performance was evaluated using area under the receiver operating curve (AUC) and true skill statistic (TSS) scores. 
 
 #### Modeling the Master Data Using "phyloregion"
+```
+rm(list = ls())  
+library(phyloregion)
+library(raster)
 
+wd <- getwd()
+
+fun1 <- function(x){
+  res <- strsplit(x, "\\/")[[1]]
+  res <- res[[length(res)]]
+}
+x1 <- as.numeric(gsub("\\D", "", fun1(wd)))
+
+dx <- read.csv("/home/brock/Seagrassproject/data/master_random_plus_original.csv", stringsAsFactors = FALSE)
+c1 <- shapefile("/home/brock/Seagrassproject/data/seagrasses_SHP/seagrasses.shp")
+proj4string(c1) = CRS("+proj=longlat +datum=WGS84") 
+files <- list.files(path="/home/brock/Seagrassproject/data/climatelayers/Current/all_current_copy", pattern='.tif', full.names=TRUE)
+predictors <- stack(files)
+
+S <- data.frame(species=(unique(dx$species)))
+xx <- split(S, (as.numeric(rownames(S))-1) %/% 5)
+index <- xx[[x1]]
+d1 <- subset(dx, dx$species %in% index$species)
+d2 <- split(d1, f=d1$species)
+
+spo <- lapply(d2, function(x) {
+  tryCatch({
+    y <- subset(c1, c1$shpname %in% x$species)
+    name.sp <- unique(x$species)
+    mm <- sdm(x=x, pol = y, predictors = predictors)
+    
+    writeRaster(mm$ensemble_raster, 
+                filename=paste0("/home/brock/Seagrassproject/Results/current/rasters/", 
+                               name.sp), format="GTiff", overwrite=TRUE)
+    write.csv(mm$data, 
+              file = paste0("/home/brock/Seagrassproject/Results/current/csvs/", 
+                            name.sp, ".csv"), row.names = FALSE)
+  }, error = function(e){cat("ERROR:", conditionMessage(e), "\n")})
+})
+```
 
 
 ### Analyses 
