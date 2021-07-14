@@ -342,6 +342,7 @@ where i is species composition under current climate and j is species compositio
 
 
 See below for example output plot:
+
 ![alt text](https://github.com/brirock35/Masters-Thesis-An-Assessment-of-Seagrass-Evolutionary-Diversity-in-the-Anthropocene/blob/main/Figure%203_beta_2050_RCP26_SIM.png (png))
 
 
