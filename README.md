@@ -206,3 +206,93 @@ rgdal::writeOGR(p1, dsn = "/Users/darulab/Desktop/BriannaR/Research/SDMs/data/Ma
 To build our species distribution models for each seagrass species, we first read in the necessary packages. The primary package that we will be using for the species modeling is "phyloregion" (https://cran.r-project.org/web/packages/phyloregion/index.html).  Afterwards, we also read in our preprocessed datasets for both the climate data as well as the seagrass spatial data and grid cells. We also ensure that our working directory is set to the location where we want the results written to. 
 
 #### Modeling the Master Data Using "phyloregion"
+
+
+
+### Analyses 
+
+#### Alpha Diversity
+
+
+```
+rm(list = ls()) 
+library(phyloregion)
+library(scico)
+library(raster)
+
+r <- raster("/Users/BriRock/Desktop/Seagrass Research/Data/worldRaster_SDM_50km.tif")
+d <- read.csv("/Users/BriRock/Desktop/fixed_alpha_csvs/2100_RCP85_FIXED.csv")
+
+r[1:ncell(r)] <- paste0("v", seq_len(ncell(r)))
+index <- match(values(r), d$grids)
+z1 <- setValues(r, d$cur_sr[index])
+z2 <- setValues(r, d$fut_sr[index])
+z3 <- setValues(r, d$dx_sr[index])
+z4 <- setValues(r, d$cur_pd[index])
+z5 <- setValues(r, d$fut_pd[index])
+z6 <- setValues(r, d$dx_pd[index])
+z7 <- setValues(r, d$sesPDcur[index])
+z8 <- setValues(r, d$sesPDfut[index])
+z9 <- setValues(r, d$dx_sespd[index])
+
+CLR <- scico(255, palette = 'batlow')
+
+range(d$cur_sr)
+range(d$fut_sr)
+range(d$dx_sr)
+range(d$cur_pd)
+range(d$fut_pd)
+range(d$dx_pd)
+range(d$sesPDcur)
+range(d$sesPDfut)
+range(d$dx_sespd)
+
+postscript("~/Desktop/2100_RCP85_PD_SR.ps", height = 8, width = 12)
+par(mfrow=c(3,3))
+par(mar=rep(1,4))
+plot(z1,  col=CLR, axes=FALSE, legend=FALSE)
+plot(z1, legend.only=TRUE, col=CLR, legend.width=1, legend.shrink=0.5,
+     smallplot=c(0.05,0.07, 0.4,0.5))
+
+plot(z2,  col=CLR, axes=FALSE, legend=FALSE)
+plot(z2, legend.only=TRUE,  col=CLR, legend.width=1, legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+plot(z3, zlim=c(-0.875, 7.0000000), col=CLR, axes=FALSE, legend=FALSE)
+plot(z3, legend.only=TRUE, zlim=c(-0.875, 7.0000000), col=CLR, legend.width=1, 
+     legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+plot(z4, col=CLR, axes=FALSE, legend=FALSE)
+plot(z4, legend.only=TRUE,  col=CLR, legend.width=1, 
+     legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+plot(z5,  col=CLR, axes=FALSE, legend=FALSE)
+plot(z5, legend.only=TRUE,  col=CLR, legend.width=1, 
+     legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+plot(z6, col=CLR, axes=FALSE, legend=FALSE)
+plot(z6, legend.only=TRUE, col=CLR, legend.width=1, 
+     legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+
+
+plot(z7, zlim=c(-4.009199, 1.952685), col=CLR, axes=FALSE, legend=FALSE)
+plot(z7, legend.only=TRUE, zlim=c(-4.009199, 1.952685), col=CLR, legend.width=1, 
+     legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+plot(z8, zlim=c(-4.009199, 1.952685), col=CLR, axes=FALSE, legend=FALSE)
+plot(z8, legend.only=TRUE, zlim=c(-4.009199, 1.952685), col=CLR, legend.width=1, 
+     legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+plot(z9, zlim=c(-19506.44, 3442957.67), col=CLR, axes=FALSE, legend=FALSE)
+plot(z9, legend.only=TRUE, zlim=c(-19506.44, 3442957.67), col=CLR, legend.width=1, 
+     legend.shrink=0.75, smallplot=c(0.05,0.07, 0.4,0.5))
+
+dev.off()
+
+
+```
+
+#### Beta Diversity
+
+
+
