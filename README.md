@@ -330,7 +330,7 @@ plot(z9, legend.only=TRUE, zlim=c(-19506.44, 3442957.67), col=CLR, legend.width=
 dev.off()
 ```
 See below for example output plot:
-![alt text](https://github.com/brirock35/Masters-Thesis-An-Assessment-of-Seagrass-Evolutionary-Diversity-in-the-Anthropocene/blob/main/Figure%201.pdf)
+![alt text](https://github.com/brirock35/Masters-Thesis-An-Assessment-of-Seagrass-Evolutionary-Diversity-in-the-Anthropocene/blob/main/2050_RCP26_PD_SR%20.png (png))
 
 #### Beta Diversity
 In order to quantify beta diversity, metrics of β- and phylogenetic β-diversity, were utilized to quantify change in species and phylogenetic composition among seagrass assemblages for both current and future projections, i.e., present-2050-2100. To assess shifts in β-diversity, we used the Sørenson, Simpson, and Jaccard’s indices. Shifts in β -diversity were expressed as:
