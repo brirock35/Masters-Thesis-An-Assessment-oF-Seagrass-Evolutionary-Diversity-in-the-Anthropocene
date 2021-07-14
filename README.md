@@ -212,7 +212,11 @@ To build our species distribution models for each seagrass species, we first rea
 ### Analyses 
 
 #### Alpha Diversity
+Changes in α-diversity was determined by separately computing species richness (SR), weighted endemism (WE), phylogenetic diversity (PD), and phylogenetic endemism (PE) between current and future climate scenarios. Thus, shifts in -diversity is expressed as:
 
+ =(_j  – _i)/_i 
+
+where i is species composition under current climate and j is species composition under future scenarios. 
 
 ```
 rm(list = ls()) 
